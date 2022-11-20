@@ -1,7 +1,23 @@
 import React, {useEffect, useState} from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Image } from 'react-native'
+import styled from 'styled-components/native'
 import Movies from '../components/Movies'
 import { APIkey } from '../config/key'
+
+import NavBar from '../components/NavBar'
+
+const SPLogo = require ('../assets/logo.png') 
+ 
+const Container = styled.ScrollView`
+    background: #000;
+`;
+
+const PageTitle = styled.Text`
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    margin: 5% 0;
+`;
 
 export default function Home() {
 
@@ -16,9 +32,10 @@ export default function Home() {
     }, [])
 
   return (
-    <View>
-        <Text>${APIkey}</Text>
+    <Container>
+            <PageTitle>Filmes em destaque</PageTitle>
           <Movies movies={movies}></Movies>
-    </View>
+          <NavBar/>
+    </Container>
   )
 }
