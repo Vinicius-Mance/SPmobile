@@ -16,7 +16,6 @@ const Navbar = styled.View`
     background: #f00;
     z-index: 999;
     justify-content: flex-end;
-    flex: 1;
 `;
 
 
