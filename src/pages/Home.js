@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { View, Text, Image } from 'react-native'
 import styled from 'styled-components/native'
-import Movies from '../components/Movies'
 import { APIkey } from '../config/key'
 import NavBar from '../components/NavBar'
  
@@ -54,7 +53,7 @@ export default function Home({navigation}) {
     const [movies, setMovies] = useState([])
 
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIkey}&language=en-US`)
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIkey}&language=pt-BR`)
             .then(response => response.json())
             .then(data => {
                 setMovies(data.results)

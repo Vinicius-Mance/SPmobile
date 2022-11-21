@@ -13,16 +13,27 @@ const Logo = styled.Image`
 const Navbar = styled.View`
     width: 100%;
     height: 70px;
-    background: #f00;
+    background: #000;
     z-index: 999;
-    justify-content: flex-end;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center;
 `;
 
+const Option = styled.Text`
+    color: #fff;
+    height: auto;
+`;
 
-export default function NavBar() {
+export default function NavBar({navigation}) {
   return (
       <Navbar>
           <Logo source={SPLogo}></Logo>
+          <Option>Destaques</Option>
+          <Option onPress={() => navigation.navigate('User')}>
+            Minha Conta
+          </Option>
       </Navbar>
   )
 }

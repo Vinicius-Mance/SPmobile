@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image } from 'react-native'
 import styled from 'styled-components/native'
-import Movies from '../components/Movies'
 import { APIkey } from '../config/key'
 
 import NavBar from '../components/NavBar'
@@ -23,7 +22,7 @@ const Container = styled.View`
     flex: 1;
 `;
 
-export default function User() {
+export default function User({navigation}) {
 
     const [movies, setMovies] = useState([])
 

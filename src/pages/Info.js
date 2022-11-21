@@ -2,7 +2,6 @@ import { useRoute } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image, ScrollView } from 'react-native'
 import styled from 'styled-components/native'
-import Movies from '../components/Movies'
 import { APIkey } from '../config/key'
 
 const InfoView = styled.View`
@@ -54,13 +53,13 @@ export default function Info({navigation}) {
 
     const route = useRoute();
     const id = route.params.itemId
-    
+
     const [movie, setMovie] = useState([])
 
     const imagePath = 'https://image.tmdb.org/t/p/w500/'
 
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${APIkey}&language=en-US`)
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${APIkey}&language=pt-BR`)
             .then(response => response.json())
             .then(data => {
                 const { title, poster_path, release_date, overview } = data
@@ -82,7 +81,7 @@ export default function Info({navigation}) {
                 <Title>{movie.title}</Title>
                 <TextInfo>Sinopse: {movie.sinopse}</TextInfo>
                 <Date>Release date: {movie.releaseDate}</Date>
-                <Voltar onPress={() => navigation.navigate('Home')}>
+                <Voltar onPress={() => navigation.goBack()}>
                     Voltar
                 </Voltar>
             </InfoView>
