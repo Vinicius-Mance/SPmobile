@@ -4,6 +4,46 @@ import { View, Text, Image, ScrollView } from 'react-native'
 import styled from 'styled-components/native'
 import { APIkey } from '../config/key'
 
+export default function Info({navigation}) {
+
+    const route = useRoute();
+    const id = route.params.itemId
+
+    const [movie, setMovie] = useState([])
+
+    const imagePath = 'https://image.tmdb.org/t/p/w500/'
+
+    useEffect(() => {
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${APIkey}&language=pt-BR`)
+            .then(response => response.json())
+            .then(data => {
+                const { title, poster_path, release_date, overview } = data
+                const movie = {
+                    id,
+                    title,
+                    image: `${imagePath}${poster_path}`,
+                    sinopse: overview,
+                    releaseDate: release_date
+                }
+                setMovie(movie)
+            })
+    }, [id])
+
+    return (
+        <Container>
+            <InfoView>
+                <MoviePoster source={{uri : movie.image}}/>
+                <Title>{movie.title}</Title>
+                <TextInfo>Sinopse: {movie.sinopse}</TextInfo>
+                <Date>Release date: {movie.releaseDate}</Date>
+                <Voltar onPress={() => navigation.goBack()}>
+                    Voltar
+                </Voltar>
+            </InfoView>
+        </Container>
+    )
+}
+
 const InfoView = styled.View`
     width: 80%;
     height: 100%;
@@ -48,43 +88,3 @@ const Voltar = styled.Text`
     padding: 5px;
     text-align: center;
 `;
-
-export default function Info({navigation}) {
-
-    const route = useRoute();
-    const id = route.params.itemId
-
-    const [movie, setMovie] = useState([])
-
-    const imagePath = 'https://image.tmdb.org/t/p/w500/'
-
-    useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${APIkey}&language=pt-BR`)
-            .then(response => response.json())
-            .then(data => {
-                const { title, poster_path, release_date, overview } = data
-                const movie = {
-                    id,
-                    title,
-                    image: `${imagePath}${poster_path}`,
-                    sinopse: overview,
-                    releaseDate: release_date
-                }
-                setMovie(movie)
-            })
-    }, [id])
-
-    return (
-        <Container>
-            <InfoView>
-                <MoviePoster source={{uri : movie.image}}/>
-                <Title>{movie.title}</Title>
-                <TextInfo>Sinopse: {movie.sinopse}</TextInfo>
-                <Date>Release date: {movie.releaseDate}</Date>
-                <Voltar onPress={() => navigation.goBack()}>
-                    Voltar
-                </Voltar>
-            </InfoView>
-        </Container>
-    )
-}

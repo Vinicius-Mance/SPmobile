@@ -4,6 +4,42 @@ import styled from 'styled-components/native'
 import { APIkey } from '../config/key'
 import NavBar from '../components/NavBar'
  
+export default function Home({navigation}) {
+
+    const imagePath = 'https://image.tmdb.org/t/p/w500/'
+    const [movies, setMovies] = useState([])
+
+    useEffect(() => {
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIkey}&language=pt-BR`)
+            .then(response => response.json())
+            .then(data => {
+                setMovies(data.results)
+            })
+    }, [])
+
+  return (
+    <Container>
+        <HomeView>
+            <PageTitle>Filmes em destaque</PageTitle>
+              <MovieList>
+                  {movies.map(movie => {
+                      return (
+                        <Movie key={movie.id}>
+                          <About onPress={() => navigation.navigate('Info',
+                          {itemId: movie.id},)}>
+                                <MoviePoster source={{ uri: imagePath + movie.poster_path }} />
+                                <MovieTitle>{movie.title}</MovieTitle>
+                          </About>
+                        </Movie>
+                      )
+                  })}
+              </MovieList>
+        </HomeView>
+        <NavBar/>
+    </Container>
+  )
+}
+
 const HomeView = styled.ScrollView`
     background: #000;
     padding: 5% 1%;
@@ -46,39 +82,3 @@ const About = styled.TouchableOpacity`
     width: 100%;
     height: 300px;
 `;
-
-export default function Home({navigation}) {
-
-    const imagePath = 'https://image.tmdb.org/t/p/w500/'
-    const [movies, setMovies] = useState([])
-
-    useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIkey}&language=pt-BR`)
-            .then(response => response.json())
-            .then(data => {
-                setMovies(data.results)
-            })
-    }, [])
-
-  return (
-    <Container>
-        <HomeView>
-            <PageTitle>Filmes em destaque</PageTitle>
-              <MovieList>
-                  {movies.map(movie => {
-                      return (
-                        <Movie key={movie.id}>
-                          <About onPress={() => navigation.navigate('Info',
-                          {itemId: movie.id},)}>
-                                <MoviePoster source={{ uri: imagePath + movie.poster_path }} />
-                                <MovieTitle>{movie.title}</MovieTitle>
-                          </About>
-                        </Movie>
-                      )
-                  })}
-              </MovieList>
-        </HomeView>
-        <NavBar/>
-    </Container>
-  )
-}

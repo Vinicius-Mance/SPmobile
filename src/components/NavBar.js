@@ -1,8 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { View, Text, Image } from 'react-native'
 import styled from 'styled-components/native'
+import { useNavigation } from '@react-navigation/native';
 
 const SPLogo = require('../assets/logo.png')
+
+export default function NavBar({navigation}) {
+    const nav = useNavigation()  
+  return (
+      <Navbar>
+          <Logo source={SPLogo}></Logo>
+          <Option onPress={() => nav.navigate('Home')}>
+            Destaques
+          </Option>
+          <Option onPress={() => nav.navigate('User')}>
+            Minha Conta
+          </Option>
+      </Navbar>
+  )
+}
+
 
 const Logo = styled.Image`
     width: 65px;
@@ -25,15 +42,3 @@ const Option = styled.Text`
     color: #fff;
     height: auto;
 `;
-
-export default function NavBar({navigation}) {
-  return (
-      <Navbar>
-          <Logo source={SPLogo}></Logo>
-          <Option>Destaques</Option>
-          <Option onPress={() => navigation.navigate('User')}>
-            Minha Conta
-          </Option>
-      </Navbar>
-  )
-}
