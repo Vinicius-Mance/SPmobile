@@ -55,6 +55,7 @@ const PageTitle = styled.Text`
 const Container = styled.View`
     flex: 1;
 `;
+
 const MovieList = styled.View`
     width: 100%;
     display: flex;
